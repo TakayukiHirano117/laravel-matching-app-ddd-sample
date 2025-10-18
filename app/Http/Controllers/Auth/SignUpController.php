@@ -32,7 +32,7 @@ class SignUpController extends Controller
         $user = new User($userId, $userName, $email);
 
         // ユーザー登録ユースケースを呼び出す
-        $this->createUserUseCase->execute($user);
+        $this->createUserUseCase->execute($user, $request->input('password'));
 
         return response()->json([
             'message' => 'User created successfully'

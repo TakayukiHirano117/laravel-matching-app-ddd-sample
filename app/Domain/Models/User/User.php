@@ -23,4 +23,14 @@ class User {
   {
     return $this->user_id;
   }
+
+  public function getUserName(): UserName
+  {
+    return $this->user_name;
+  }
+
+  public function getEmail(): Email
+  {
+    return $this->email;
+  }
 }
