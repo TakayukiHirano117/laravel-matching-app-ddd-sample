@@ -2,7 +2,9 @@
 
 namespace App\Domain\Models\User;
 
-use App\Domain\Models\vo\UserId;
+use App\Domain\Models\User\UserId;
+use App\Domain\Models\User\UserName;
+use App\Domain\Models\vo\Email;
 
 class User {
   private UserId $user_id;
