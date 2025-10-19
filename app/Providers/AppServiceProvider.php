@@ -5,7 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Domain\Repository\UserRepositoryInterface;
 use App\Infra\Repository\UserRepository;
-
+use App\Domain\Repository\LikeRepositoryInterface;
+use App\Infra\Repository\LikeRepository;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -17,6 +18,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             UserRepositoryInterface::class,
             UserRepository::class
+        );
+        $this->app->bind(
+            LikeRepositoryInterface::class,
+            LikeRepository::class
         );
     }
 

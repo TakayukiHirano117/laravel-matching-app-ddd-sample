@@ -6,6 +6,7 @@ use App\Domain\Repository\UserRepositoryInterface;
 use App\Domain\Models\User\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Domain\Models\User\UserId;
 class UserRepository implements UserRepositoryInterface
 {
   /**
@@ -24,5 +25,14 @@ class UserRepository implements UserRepositoryInterface
       'created_at' => now(),
       'updated_at' => now(),
     ]);
+  }
+
+  public function findById(UserId $userId): ?User
+  {
+    $user = DB::table('users')->where('id', $userId->value())->first();
+    if (!$user) {
+      return null;
+    }
+    return $user;
   }
 }

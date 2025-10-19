@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Domain\Models\User;
+namespace App\Domain\Models\vo;
 
 use Ramsey\Uuid\Uuid;
 use InvalidArgumentException;
 
-class UserId
+class UuidVo
 {
     private string $value;
 
@@ -65,10 +65,10 @@ class UserId
     /**
      * 等価性チェック
      * 
-     * @param UserId $other
+     * @param UuidVo $other
      * @return bool
      */
-    public function equals(UserId $other): bool
+    public function equals(UuidVo $other): bool
     {
         return $this->value === $other->value;
     }
