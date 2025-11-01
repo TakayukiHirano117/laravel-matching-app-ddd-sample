@@ -7,6 +7,8 @@ use App\Domain\Repository\UserRepositoryInterface;
 use App\Infra\Repository\UserRepository;
 use App\Domain\Repository\LikeRepositoryInterface;
 use App\Infra\Repository\LikeRepository;
+use App\UseCase\QueryService\UserQueryServiceInterface;
+use App\Infra\QueryService\UserQueryService;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -22,6 +24,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             LikeRepositoryInterface::class,
             LikeRepository::class
+        );
+
+        // QueryServiceのバインディング
+        $this->app->bind(
+            UserQueryServiceInterface::class,
+            UserQueryService::class
         );
     }
 

@@ -6,15 +6,22 @@ use App\Domain\Models\User\UserName;
 use App\Domain\Models\vo\Email;
 use App\Domain\Models\vo\UuidVo;
 
-class User {
+class User
+{
   private UuidVo $user_id;
   private UserName $user_name;
   private Email $email;
   // profile情報は後で考える。
-  function __construct(UuidVo $user_id, UserName $user_name, Email $email) {
+  function __construct(UuidVo $user_id, UserName $user_name, Email $email)
+  {
     $this->user_id = $user_id;
     $this->user_name = $user_name;
     $this->email = $email;
+  }
+
+  public static function NewUserByVal(UuidVo $user_id, UserName $user_name, Email $email): self
+  {
+    return new self($user_id, $user_name, $email);
   }
 
   public function getUserId(): UuidVo
