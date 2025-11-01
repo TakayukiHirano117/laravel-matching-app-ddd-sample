@@ -16,7 +16,7 @@ class UserName
    * @param string $value ユーザー名
    * @throws InvalidArgumentException
    */
-  private function __construct(string $value)
+  public function __construct(string $value)
   {
     $trimmedValue = trim($value);
 

@@ -13,7 +13,7 @@ class UuidVo
      * @param string $value UUID
      * @throws InvalidArgumentException
      */
-    private function __construct(string $value)
+    public function __construct(string $value)
     {
         if (!Uuid::isValid($value)) {
             throw new InvalidArgumentException("Invalid UUID format: {$value}");

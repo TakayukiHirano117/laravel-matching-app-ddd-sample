@@ -18,5 +18,5 @@ Route::get('/health-check', function () {
 
 // TODO: prefixをつけること。
 Route::post('/auth/sign-up', SignUpController::class)->name('auth.sign-up');
-Route::post('/users/{user_id}/likes', CreateLikeController::class)->name('like.create');
+Route::post('/likes', CreateLikeController::class)->name('like.create');
 Route::get('/users', getUserListController::class)->name('user.list');

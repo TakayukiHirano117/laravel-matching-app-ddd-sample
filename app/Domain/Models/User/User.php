@@ -12,7 +12,7 @@ class User
   private UserName $user_name;
   private Email $email;
   // profile情報は後で考える。
-  function __construct(UuidVo $user_id, UserName $user_name, Email $email)
+  public function __construct(UuidVo $user_id, UserName $user_name, Email $email)
   {
     $this->user_id = $user_id;
     $this->user_name = $user_name;

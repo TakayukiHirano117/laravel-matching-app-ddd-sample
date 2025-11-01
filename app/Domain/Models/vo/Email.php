@@ -15,7 +15,7 @@ class Email
    * @param string $value メールアドレス
    * @throws InvalidArgumentException
    */
-  private function __construct(string $value)
+  public function __construct(string $value)
   {
     $trimmedValue = trim($value);
 
