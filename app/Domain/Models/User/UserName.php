@@ -46,7 +46,7 @@ class UserName
    * @param string $value ユーザー名
    * @return self
    */
-  public static function create(string $value): self
+  public static function NewUserNameByVal(string $value): self
   {
     return new self($value);
   }

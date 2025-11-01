@@ -39,7 +39,7 @@ class Email
     $this->value = $trimmedValue;
   }
 
-  public static function create(string $value): self
+  public static function NewEmailByVal(string $value): self
   {
     return new self($value);
   }

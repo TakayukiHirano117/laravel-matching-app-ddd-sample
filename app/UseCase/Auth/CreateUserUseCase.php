@@ -21,6 +21,6 @@ class CreateUserUseCase
     public function execute(User $user, string $password): void
     {
         // ユーザー登録ロジックを実行する
-        $this->userRepository->create($user, $password);
+        $this->userRepository->signUp($user, $password);
     }
 }
