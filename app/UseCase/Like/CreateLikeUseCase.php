@@ -24,6 +24,8 @@ class CreateLikeUseCase
       throw new \Exception('User not found');
     }
 
+    // 既にいいねが存在していたらエラーを返す
+
     $like = new Like(new UuidVo(Uuid::uuid4()->toString()), $user->getUserId(), $targetUser->getUserId());
     $this->likeRepository->create($like);
   }
