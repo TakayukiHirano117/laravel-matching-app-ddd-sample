@@ -10,5 +10,5 @@ sail artisan make:migration 名前
 sail artisan migrate
 
 # テスト実行
-./vendor/bin/pest
+sail pest
 
