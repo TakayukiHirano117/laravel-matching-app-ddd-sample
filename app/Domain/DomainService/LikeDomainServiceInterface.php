@@ -6,5 +6,5 @@ use App\Domain\Models\vo\UuidVo;
 
 interface LikeDomainServiceInterface
 {
-  public function isLikeExists(UuidVo $likeId): bool;
+  public function isLikeExists(UuidVo $userId, UuidVo $targetUserId): bool;
 }

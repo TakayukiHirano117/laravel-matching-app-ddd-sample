@@ -9,6 +9,8 @@ use App\Domain\Repository\LikeRepositoryInterface;
 use App\Infra\Repository\LikeRepository;
 use App\UseCase\QueryService\UserQueryServiceInterface;
 use App\Infra\QueryService\UserQueryService;
+use App\Domain\DomainService\LikeDomainServiceInterface;
+use App\Infra\DomainService\LikeDomainService;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -30,6 +32,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             UserQueryServiceInterface::class,
             UserQueryService::class
+        );
+
+        // DomainServiceのバインディング
+        $this->app->bind(
+            LikeDomainServiceInterface::class,
+            LikeDomainService::class
         );
     }
 
