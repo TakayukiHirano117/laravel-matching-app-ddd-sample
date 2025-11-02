@@ -27,4 +27,23 @@ class SignUpRequest extends FormRequest
             'password' => 'required|string|min:8',
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'ユーザー名は必須です。',
+            'name.string' => 'ユーザー名は文字列である必要があります。',
+            'name.max' => 'ユーザー名は50文字以下である必要があります。',
+            'email.required' => 'メールアドレスは必須です。',
+            'email.email' => 'メールアドレスは有効なメールアドレスである必要があります。',
+            'email.max' => 'メールアドレスは254文字以下である必要があります。',
+        ];
+    }
+    public function attributes(): array
+    {
+        return [
+            'name' => 'ユーザー名',
+            'email' => 'メールアドレス',
+            'password' => 'パスワード',
+        ];
+    }
 }

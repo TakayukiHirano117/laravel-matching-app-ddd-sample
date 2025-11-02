@@ -3,29 +3,26 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\SignUpRequest;
+use Illuminate\Http\Request;
 use App\UseCase\Auth\CreateUserUseCase;
+use App\Http\Requests\Auth\SignUpRequest;
 use App\Domain\Models\vo\UuidVo;
 use App\Domain\Models\User\UserName;
 use App\Domain\Models\vo\Email;
 use App\Domain\Models\User\User;
 use Ramsey\Uuid\Uuid;
-
-class SignUpController extends Controller
+use InvalidArgumentException;
+class AuthController extends Controller
 {
-    /**
-     * @param CreateUserUseCase $createUserUseCase
-     */
-    public function __construct(
-        private readonly CreateUserUseCase $createUserUseCase
-    ) {
-    }
 
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(SignUpRequest $request)
-    {
+  public function __construct(
+    private readonly CreateUserUseCase $createUserUseCase
+  ) {
+  }
+
+public function signUp(SignUpRequest $request)
+{
+    try {
         $userId = new UuidVo(Uuid::uuid4()->toString());
         $userName = new UserName($request->input('name'));
         $email = new Email($request->input('email'));
@@ -36,5 +33,19 @@ class SignUpController extends Controller
         return response()->json([
             'message' => 'User created successfully'
         ], 201);
+    } catch (InvalidArgumentException $e) {
+        return response()->json([
+            'message' => $e->getMessage()
+        ], 422);
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'User creation failed',
+            'error' => $e->getMessage()
+        ], 500);
     }
+}
+
+  public function signIn(Request $request)
+  {
+  }
 }
