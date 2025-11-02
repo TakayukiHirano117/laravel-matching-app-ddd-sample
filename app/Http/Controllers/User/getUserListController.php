@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\UserListResource;
 use App\UseCase\User\GetUserListUseCase;
 use Illuminate\Http\Request;
 
@@ -26,7 +26,7 @@ class getUserListController extends Controller
         $users = $this->getUserListUseCase->execute();
 
         return response()->json([
-            'users' => UserResource::collection($users)
+            'users' => UserListResource::collection($users)
         ]);
     }
 }

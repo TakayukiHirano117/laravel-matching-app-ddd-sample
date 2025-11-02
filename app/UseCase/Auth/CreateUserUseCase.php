@@ -4,6 +4,10 @@ namespace App\UseCase\Auth;
 
 use App\Domain\Models\User\User;
 use App\Domain\Repository\UserRepositoryInterface;
+use App\Domain\Models\vo\UuidVo;
+use App\Domain\Models\vo\Email;
+use App\Domain\Models\User\UserName;
+use Ramsey\Uuid\Uuid;
 
 class CreateUserUseCase
 {
@@ -16,11 +20,16 @@ class CreateUserUseCase
     }
 
     /**
-     * @param User $user
+     * @param array $input
      */
-    public function execute(User $user, string $password): void
+    public function execute($input): string
     {
-        // ユーザー登録ロジックを実行する
-        $this->userRepository->signUp($user, $password);
+        $userId = new UuidVo(Uuid::uuid4()->toString());
+        $userName = new UserName($input['name']);
+        $email = new Email($input['email']);
+        $user = new User($userId, $userName, $email);
+
+        $token = $this->userRepository->signUp($user, $input['password']);
+        return $token;
     }
 }

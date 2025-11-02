@@ -23,15 +23,12 @@ class AuthController extends Controller
 public function signUp(SignUpRequest $request)
 {
     try {
-        $userId = new UuidVo(Uuid::uuid4()->toString());
-        $userName = new UserName($request->input('name'));
-        $email = new Email($request->input('email'));
-        $user = new User($userId, $userName, $email);
-
-        $this->createUserUseCase->execute($user, $request->input('password'));
+        $input = $request->all();
+        $token = $this->createUserUseCase->execute($input);
 
         return response()->json([
-            'message' => 'User created successfully'
+            'message' => 'User created successfully',
+            'token' => $token
         ], 201);
     } catch (InvalidArgumentException $e) {
         return response()->json([
@@ -47,5 +44,6 @@ public function signUp(SignUpRequest $request)
 
   public function signIn(Request $request)
   {
+    
   }
 }
