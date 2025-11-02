@@ -9,17 +9,17 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Domain\Models\vo\UuidVo;
 use App\Domain\Models\vo\Email;
+use App\Models\User as UserEloquent;
 class UserRepository implements UserRepositoryInterface
 {
   /**
    * @param User $user
    * @param string $password
    */
-  public function signUp(User $user, string $password): void
+  public function signUp(User $user, string $password): string
   {
     $hashedPassword = Hash::make($password);
-
-    DB::table('users')->insert([
+    $userEloquent = UserEloquent::create([
       'id' => $user->getUserId()->value(),
       'name' => $user->getUserName()->value(),
       'email' => $user->getEmail()->value(),
@@ -27,6 +27,18 @@ class UserRepository implements UserRepositoryInterface
       'created_at' => now(),
       'updated_at' => now(),
     ]);
+    
+    $token = $userEloquent->createToken('api_token')->plainTextToken;
+    return $token;
+
+    // DB::table('users')->insert([
+    //   'id' => $user->getUserId()->value(),
+    //   'name' => $user->getUserName()->value(),
+    //   'email' => $user->getEmail()->value(),
+    //   'password' => $hashedPassword,
+    //   'created_at' => now(),
+    //   'updated_at' => now(),
+    // ]);
   }
 
   public function findById(UuidVo $userId): ?User
