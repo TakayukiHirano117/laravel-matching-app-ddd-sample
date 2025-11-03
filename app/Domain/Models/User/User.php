@@ -24,6 +24,8 @@ class User
     return new self($user_id, $user_name, $email);
   }
 
+  // プロパティはprivateにしておく。
+  // アクセスしていいプロパティに対してのみgetterを用意する。
   public function getUserId(): UuidVo
   {
     return $this->user_id;
