@@ -11,6 +11,12 @@ use App\UseCase\QueryService\UserQueryServiceInterface;
 use App\Infra\QueryService\UserQueryService;
 use App\Domain\DomainService\LikeDomainServiceInterface;
 use App\Infra\DomainService\LikeDomainService;
+use App\Domain\DomainService\MatchingDomainServiceInterface;
+use App\Infra\DomainService\MatchingDomainService;
+use App\Domain\Repository\MatchingRepositoryInterface;
+use App\Infra\Repository\MatchingRepository;
+use App\Domain\Repository\TransactionRepositoryInterface;
+use App\Infra\Repository\TransactionRepository;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -27,7 +33,14 @@ class AppServiceProvider extends ServiceProvider
             LikeRepositoryInterface::class,
             LikeRepository::class
         );
-
+        $this->app->bind(
+            MatchingRepositoryInterface::class,
+            MatchingRepository::class
+        );
+        $this->app->bind(
+            TransactionRepositoryInterface::class,
+            TransactionRepository::class
+        );
         // QueryServiceのバインディング
         $this->app->bind(
             UserQueryServiceInterface::class,
@@ -38,6 +51,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             LikeDomainServiceInterface::class,
             LikeDomainService::class
+        );
+        $this->app->bind(
+            MatchingDomainServiceInterface::class,
+            MatchingDomainService::class
         );
     }
 
