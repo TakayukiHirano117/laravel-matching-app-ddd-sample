@@ -14,6 +14,11 @@ class Like {
     $this->target_user_id = $target_user_id;
   }
 
+  public static function NewLikeByVal(UuidVo $like_id, UuidVo $user_id, UuidVo $target_user_id): self
+  {
+    return new self($like_id, $user_id, $target_user_id);
+  }
+
   public function getLikeId(): UuidVo
   {
     return $this->like_id;
