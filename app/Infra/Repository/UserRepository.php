@@ -19,7 +19,7 @@ class UserRepository implements UserRepositoryInterface
   public function signUp(User $user, string $password): string
   {
     $hashedPassword = Hash::make($password);
-    $userEloquent = UserEloquent::create([
+    UserEloquent::create([
       'id' => $user->getUserId()->value(),
       'name' => $user->getUserName()->value(),
       'email' => $user->getEmail()->value(),
@@ -27,18 +27,8 @@ class UserRepository implements UserRepositoryInterface
       'created_at' => now(),
       'updated_at' => now(),
     ]);
-    
-    $token = $userEloquent->createToken('api_token')->plainTextToken;
-    return $token;
 
-    // DB::table('users')->insert([
-    //   'id' => $user->getUserId()->value(),
-    //   'name' => $user->getUserName()->value(),
-    //   'email' => $user->getEmail()->value(),
-    //   'password' => $hashedPassword,
-    //   'created_at' => now(),
-    //   'updated_at' => now(),
-    // ]);
+    return $this->createToken($user);
   }
 
   public function findById(UuidVo $userId): ?User
@@ -56,5 +46,44 @@ class UserRepository implements UserRepositoryInterface
       UserName::NewUserNameByVal($userFromDb->name),
       Email::NewEmailByVal($userFromDb->email)
     );
+  }
+
+  public function findByEmail(string $email): ?User
+  {
+    $userFromDb = DB::table('users')
+      ->where('email', $email)
+      ->first();
+
+    if ($userFromDb === null) {
+      return null;
+    }
+
+    return new User(
+      UuidVo::NewUuidByVal($userFromDb->id),
+      UserName::NewUserNameByVal($userFromDb->name),
+      Email::NewEmailByVal($userFromDb->email)
+    );
+  }
+
+  public function verifyPassword(User $user, string $password): bool
+  {
+    $userEloquent = UserEloquent::find($user->getUserId()->value());
+
+    if ($userEloquent === null) {
+      return false;
+    }
+
+    return Hash::check($password, $userEloquent->password);
+  }
+
+  public function createToken(User $user, string $tokenName = 'api_token'): string
+  {
+    $userEloquent = UserEloquent::find($user->getUserId()->value());
+
+    if ($userEloquent === null) {
+      throw new \Exception('User not found');
+    }
+
+    return $userEloquent->createToken($tokenName)->plainTextToken;
   }
 }

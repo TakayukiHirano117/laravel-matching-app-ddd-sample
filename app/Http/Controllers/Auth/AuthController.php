@@ -5,45 +5,74 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\UseCase\Auth\CreateUserUseCase;
+use App\UseCase\Auth\SignInUseCase;
+use App\UseCase\Auth\SignOutUseCase;
 use App\Http\Requests\Auth\SignUpRequest;
-use App\Domain\Models\vo\UuidVo;
-use App\Domain\Models\User\UserName;
-use App\Domain\Models\vo\Email;
-use App\Domain\Models\User\User;
-use Ramsey\Uuid\Uuid;
+use App\Http\Requests\Auth\SignInRequest;
 use InvalidArgumentException;
+use Exception;
 class AuthController extends Controller
 {
 
-  public function __construct(
-    private readonly CreateUserUseCase $createUserUseCase
-  ) {
-  }
-
-public function signUp(SignUpRequest $request)
-{
-    try {
-        $input = $request->all();
-        $token = $this->createUserUseCase->execute($input);
-
-        return response()->json([
-            'message' => 'User created successfully',
-            'token' => $token
-        ], 201);
-    } catch (InvalidArgumentException $e) {
-        return response()->json([
-            'message' => $e->getMessage()
-        ], 422);
-    } catch (\Exception $e) {
-        return response()->json([
-            'message' => 'User creation failed',
-            'error' => $e->getMessage()
-        ], 500);
+    public function __construct(
+        private readonly CreateUserUseCase $createUserUseCase,
+        private readonly SignInUseCase $signInUseCase,
+        private readonly SignOutUseCase $signOutUseCase
+    ) {
     }
-}
 
-  public function signIn(Request $request)
-  {
-    
-  }
+    public function signUp(SignUpRequest $request)
+    {
+        try {
+            $input = $request->all();
+            $token = $this->createUserUseCase->execute($input);
+
+            return response()->json([
+                'message' => 'User created successfully',
+                'token' => $token
+            ], 201);
+        } catch (InvalidArgumentException $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'User creation failed',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function signIn(SignInRequest $request)
+    {
+        try {
+            $input = $request->all();
+            $token = $this->signInUseCase->execute($input);
+
+            return response()->json([
+                'message' => 'Login successful',
+                'token' => $token
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Invalid credentials'
+            ], 401);
+        }
+    }
+
+    public function signOut(Request $request)
+    {
+        try {
+            $this->signOutUseCase->execute($request);
+
+            return response()->json([
+                'message' => 'Logout successful'
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Logout failed',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }
