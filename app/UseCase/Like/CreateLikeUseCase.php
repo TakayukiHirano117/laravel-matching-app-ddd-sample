@@ -23,6 +23,10 @@ class CreateLikeUseCase
     $userId = UuidVo::NewUuidByVal($input['user_id']);
     $targetUserId = UuidVo::NewUuidByVal($input['target_user_id']);
 
+    if ($userId->equals($targetUserId)) {
+      throw new Exception('User and target user cannot be the same');
+    }
+
     $user = $this->userRepository->findById($userId);
     $targetUser = $this->userRepository->findById($targetUserId);
 
