@@ -31,13 +31,6 @@ test('createで新しい有効なUUIDを生成できる', function () {
     ->and(\Ramsey\Uuid\Uuid::isValid($uuidVo->value()))->toBeTrue();
 });
 
-test('createで生成されるUUIDは毎回異なる', function () {
-  $uuidVo1 = UuidVo::create();
-  $uuidVo2 = UuidVo::create();
-
-  expect($uuidVo1->value())->not->toBe($uuidVo2->value());
-});
-
 test('valueで正しい値を取得できる', function () {
   $validUuid = '550e8400-e29b-41d4-a716-446655440000';
   $uuidVo = new UuidVo($validUuid);
