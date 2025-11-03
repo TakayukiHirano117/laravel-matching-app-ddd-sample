@@ -24,4 +24,14 @@ class Matching {
   {
     return $this->matching_id;
   }
+
+  public function getUserId(): UuidVo
+  {
+    return $this->user_id;
+  }
+
+  public function getOtherUserId(): UuidVo
+  {
+    return $this->other_user_id;
+  }
 }
