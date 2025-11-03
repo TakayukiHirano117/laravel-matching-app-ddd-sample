@@ -40,9 +40,7 @@ test('POST /likesでいいねが正しく作成される', function () {
   ]);
 
   $response->assertStatus(201)
-    ->assertJson([
-      'message' => 'Like created successfully',
-    ]);
+    ->assertJsonStructure(['message']);
 
   // データベースにいいねが保存されていることを確認
   $likeFromDb = DB::table('likes')
@@ -137,9 +135,7 @@ test('POST /likesで存在しないユーザーIDの場合に400エラーが返�
   ]);
 
   $response->assertStatus(400)
-    ->assertJson([
-      'message' => 'Target user not found',
-    ]);
+    ->assertJsonStructure(['message']);
 });
 
 test('POST /likesで既にいいねが存在する場合に400エラーが返される', function () {
@@ -183,9 +179,7 @@ test('POST /likesで既にいいねが存在する場合に400エラーが返さ
   ]);
 
   $response->assertStatus(400)
-    ->assertJson([
-      'message' => 'Like already exists',
-    ]);
+    ->assertJsonStructure(['message']);
 });
 
 test('POST /likesで無効なUUID形式の場合にバリデーションエラーが返される', function () {

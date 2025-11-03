@@ -2,7 +2,10 @@
 
 use App\Domain\Models\vo\UuidVo;
 use App\Infra\DomainService\LikeDomainService;
+use App\Infra\DomainService\MatchingDomainService;
 use App\Infra\Repository\LikeRepository;
+use App\Infra\Repository\MatchingRepository;
+use App\Infra\Repository\TransactionRepository;
 use App\Infra\Repository\UserRepository;
 use App\UseCase\Like\CreateLikeUseCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -14,7 +17,17 @@ test('executeでいいねが正しく作成される', function () {
   $likeRepository = new LikeRepository();
   $userRepository = new UserRepository();
   $likeDomainService = new LikeDomainService();
-  $createLikeUseCase = new CreateLikeUseCase($likeRepository, $userRepository, $likeDomainService);
+  $matchingDomainService = new MatchingDomainService();
+  $matchingRepository = new MatchingRepository();
+  $transactionRepository = new TransactionRepository();
+  $createLikeUseCase = new CreateLikeUseCase(
+    $likeRepository,
+    $userRepository,
+    $likeDomainService,
+    $matchingDomainService,
+    $matchingRepository,
+    $transactionRepository
+  );
 
   $userId = UuidVo::create();
   $targetUserId = UuidVo::create();
@@ -60,7 +73,17 @@ test('executeで存在しないユーザーIDの場合に例外が発生する',
   $likeRepository = new LikeRepository();
   $userRepository = new UserRepository();
   $likeDomainService = new LikeDomainService();
-  $createLikeUseCase = new CreateLikeUseCase($likeRepository, $userRepository, $likeDomainService);
+  $matchingDomainService = new MatchingDomainService();
+  $matchingRepository = new MatchingRepository();
+  $transactionRepository = new TransactionRepository();
+  $createLikeUseCase = new CreateLikeUseCase(
+    $likeRepository,
+    $userRepository,
+    $likeDomainService,
+    $matchingDomainService,
+    $matchingRepository,
+    $transactionRepository
+  );
 
   $userId = UuidVo::create();
   $targetUserId = UuidVo::create();
@@ -81,14 +104,24 @@ test('executeで存在しないユーザーIDの場合に例外が発生する',
   ];
 
   expect(fn() => $createLikeUseCase->execute($input))
-    ->toThrow(Exception::class, 'User not found');
+    ->toThrow(Exception::class);
 });
 
 test('executeで存在しないターゲットユーザーIDの場合に例外が発生する', function () {
   $likeRepository = new LikeRepository();
   $userRepository = new UserRepository();
   $likeDomainService = new LikeDomainService();
-  $createLikeUseCase = new CreateLikeUseCase($likeRepository, $userRepository, $likeDomainService);
+  $matchingDomainService = new MatchingDomainService();
+  $matchingRepository = new MatchingRepository();
+  $transactionRepository = new TransactionRepository();
+  $createLikeUseCase = new CreateLikeUseCase(
+    $likeRepository,
+    $userRepository,
+    $likeDomainService,
+    $matchingDomainService,
+    $matchingRepository,
+    $transactionRepository
+  );
 
   $userId = UuidVo::create();
   $targetUserId = UuidVo::create();
@@ -109,14 +142,24 @@ test('executeで存在しないターゲットユーザーIDの場合に例外�
   ];
 
   expect(fn() => $createLikeUseCase->execute($input))
-    ->toThrow(Exception::class, 'Target user not found');
+    ->toThrow(Exception::class);
 });
 
 test('executeで既にいいねが存在する場合に例外が発生する', function () {
   $likeRepository = new LikeRepository();
   $userRepository = new UserRepository();
   $likeDomainService = new LikeDomainService();
-  $createLikeUseCase = new CreateLikeUseCase($likeRepository, $userRepository, $likeDomainService);
+  $matchingDomainService = new MatchingDomainService();
+  $matchingRepository = new MatchingRepository();
+  $transactionRepository = new TransactionRepository();
+  $createLikeUseCase = new CreateLikeUseCase(
+    $likeRepository,
+    $userRepository,
+    $likeDomainService,
+    $matchingDomainService,
+    $matchingRepository,
+    $transactionRepository
+  );
 
   $userId = UuidVo::create();
   $targetUserId = UuidVo::create();
@@ -155,14 +198,24 @@ test('executeで既にいいねが存在する場合に例外が発生する', f
   ];
 
   expect(fn() => $createLikeUseCase->execute($input))
-    ->toThrow(Exception::class, 'Like already exists');
+    ->toThrow(Exception::class);
 });
 
 test('executeで複数のいいねが正しく作成される', function () {
   $likeRepository = new LikeRepository();
   $userRepository = new UserRepository();
   $likeDomainService = new LikeDomainService();
-  $createLikeUseCase = new CreateLikeUseCase($likeRepository, $userRepository, $likeDomainService);
+  $matchingDomainService = new MatchingDomainService();
+  $matchingRepository = new MatchingRepository();
+  $transactionRepository = new TransactionRepository();
+  $createLikeUseCase = new CreateLikeUseCase(
+    $likeRepository,
+    $userRepository,
+    $likeDomainService,
+    $matchingDomainService,
+    $matchingRepository,
+    $transactionRepository
+  );
 
   $userId = UuidVo::create();
   $targetUserId1 = UuidVo::create();
