@@ -41,7 +41,7 @@ class UserRepository implements UserRepositoryInterface
       return null;
     }
 
-    return new User(
+    return User::NewUserByVal(
       UuidVo::NewUuidByVal($userFromDb->id),
       UserName::NewUserNameByVal($userFromDb->name),
       Email::NewEmailByVal($userFromDb->email)
@@ -85,5 +85,22 @@ class UserRepository implements UserRepositoryInterface
     }
 
     return $userEloquent->createToken($tokenName)->plainTextToken;
+  }
+
+  public function getMyProfile(UuidVo $userId): User
+  {
+    $userFromDb = DB::table('users')
+      ->where('id', $userId->value())
+      ->first();
+
+    if ($userFromDb === null) {
+      throw new \Exception('User not found');
+    }
+
+    return User::NewUserByVal(
+      UuidVo::NewUuidByVal($userFromDb->id),
+      UserName::NewUserNameByVal($userFromDb->name),
+      Email::NewEmailByVal($userFromDb->email)
+    );
   }
 }

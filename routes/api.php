@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Like\CreateLikeController;
 use App\Http\Controllers\User\getUserListController;
 use App\Http\Controllers\Auth\SignUpController;
+use App\Http\Controllers\User\UserController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -24,3 +25,4 @@ Route::post('/auth/sign-out', [AuthController::class, 'signOut'])->name('auth.si
 
 Route::post('/likes', CreateLikeController::class)->name('like.create')->middleware('auth:sanctum');
 Route::get('/users', getUserListController::class)->name('user.list')->middleware('auth:sanctum');
+Route::get('/user/me/info', [UserController::class, 'getMyProfile'])->name('user.me.info')->middleware('auth:sanctum');

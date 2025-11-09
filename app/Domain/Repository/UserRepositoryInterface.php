@@ -11,4 +11,5 @@ interface UserRepositoryInterface
     public function findByEmail(string $email): ?User;
     public function verifyPassword(User $user, string $password): bool;
     public function createToken(User $user, string $tokenName = 'api_token'): string;
+    public function getMyProfile(UuidVo $userId): User;
 }

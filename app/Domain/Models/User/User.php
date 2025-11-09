@@ -14,6 +14,7 @@ class User
   // profile情報は後で考える。
   public function __construct(UuidVo $user_id, UserName $user_name, Email $email)
   {
+    // バリデーションかける
     $this->user_id = $user_id;
     $this->user_name = $user_name;
     $this->email = $email;
