@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Like\CreateLikeController;
 use App\Http\Controllers\User\getUserListController;
-use App\Http\Controllers\Auth\SignUpController;
 use App\Http\Controllers\User\UserController;
-
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\TalkController;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -26,3 +26,6 @@ Route::post('/auth/sign-out', [AuthController::class, 'signOut'])->name('auth.si
 Route::post('/likes', CreateLikeController::class)->name('like.create')->middleware('auth:sanctum');
 Route::get('/users', getUserListController::class)->name('user.list')->middleware('auth:sanctum');
 Route::get('/user/me/info', [UserController::class, 'getMyProfile'])->name('user.me.info')->middleware('auth:sanctum');
+Route::get('/talk/rooms', [TalkController::class, 'getTalkRooms'])->name('talk.rooms')->middleware('auth:sanctum');
+
+Route::post('/messages', [MessageController::class, 'sendMessage'])->name('message.send')->middleware('auth:sanctum');
