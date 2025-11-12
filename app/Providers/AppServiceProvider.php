@@ -17,6 +17,8 @@ use App\Domain\Repository\MatchingRepositoryInterface;
 use App\Infra\Repository\MatchingRepository;
 use App\Domain\Repository\TransactionRepositoryInterface;
 use App\Infra\Repository\TransactionRepository;
+use App\Domain\Repository\TalkRoomRepositoryInterface;
+use App\Infra\Repository\TalkRoomRepository;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -40,6 +42,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             TransactionRepositoryInterface::class,
             TransactionRepository::class
+        );
+        $this->app->bind(
+            TalkRoomRepositoryInterface::class,
+            TalkRoomRepository::class
         );
         // QueryServiceのバインディング
         $this->app->bind(
