@@ -49,16 +49,6 @@ class Email
     return $this->value;
   }
 
-  /**
-   * 文字列表現
-   * 
-   * @return string
-   */
-  // public function __toString(): string
-  // {
-  //   return $this->value;
-  // }
-
   public function equals(Email $other): bool
   {
     return $this->value === $other->value;
