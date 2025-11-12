@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UseCase\Talk;
+namespace App\UseCase;
 
 use App\Domain\Models\vo\UuidVo;
 use App\UseCase\QueryService\TalkQueryServiceInterface;
@@ -22,6 +22,7 @@ class TalkUseCase
         if ($talkRooms === null) {
             return [];
         }
+        // dd($talkRooms);
 
         return $talkRooms;
     }

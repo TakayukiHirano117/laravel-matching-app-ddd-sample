@@ -19,6 +19,8 @@ use App\Domain\Repository\TransactionRepositoryInterface;
 use App\Infra\Repository\TransactionRepository;
 use App\Domain\Repository\TalkRoomRepositoryInterface;
 use App\Infra\Repository\TalkRoomRepository;
+use App\UseCase\QueryService\TalkQueryServiceInterface;
+use App\Infra\QueryService\TalkRoomQueryService;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -52,7 +54,10 @@ class AppServiceProvider extends ServiceProvider
             UserQueryServiceInterface::class,
             UserQueryService::class
         );
-
+        $this->app->bind(
+            TalkQueryServiceInterface::class,
+            TalkRoomQueryService::class
+        );
         // DomainServiceのバインディング
         $this->app->bind(
             LikeDomainServiceInterface::class,

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\UseCase\Talk\TalkUseCase;
+use App\UseCase\TalkUseCase;
+use App\Http\Resources\TalkRoomResource;
 class TalkController extends Controller
 {
     public function __construct(
@@ -20,8 +21,9 @@ class TalkController extends Controller
         }
 
         $talkRooms = $this->talkUseCase->getTalkRooms($userId) ?? [];
+        // dd($talkRooms);
         return response()->json([
-            'talk_rooms' => $talkRooms
+            'talk_rooms' => TalkRoomResource::collection($talkRooms)
         ]);
     }
 }

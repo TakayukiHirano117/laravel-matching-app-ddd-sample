@@ -14,7 +14,8 @@ class TalkRoomQueryService implements TalkQueryServiceInterface
     $talkRoomsFromDb = 
       DB::table('talk_rooms')
           ->where('user_id', $userId->value())
-          ->select('other_user_id', 'last_message')
+          ->orWhere('other_user_id', $userId->value())
+          ->select('id', 'user_id', 'other_user_id', 'last_message')
           ->orderBy('updated_at', 'desc')
           ->get();
 
@@ -22,6 +23,9 @@ class TalkRoomQueryService implements TalkQueryServiceInterface
       return null;
     }
 
+    // dd($userId->value());
+    // dd($talkRoomsFromDb);
+    $talkRooms = [];
     foreach ($talkRoomsFromDb as $talkRoomFromDb) {
       $talkRooms[] = TalkRoom::NewTalkRoomByVal(
         UuidVo::NewUuidByVal($talkRoomFromDb->id),
@@ -30,7 +34,7 @@ class TalkRoomQueryService implements TalkQueryServiceInterface
         LastMessage::NewLastMessageByVal($talkRoomFromDb->last_message ?? '')
       );
     }
-
+    // dd($talkRooms);
     return $talkRooms;
   }
 }
