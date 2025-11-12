@@ -12,6 +12,9 @@ use App\Domain\DomainService\MatchingDomainServiceInterface;
 use App\Domain\Models\Match\Matching;
 use App\Domain\Repository\MatchingRepositoryInterface;
 use App\Domain\Repository\TransactionRepositoryInterface;
+use App\Domain\Models\TalkRoom\TalkRoom;
+use App\Domain\Models\TalkRoom\LastMessage;
+use App\Domain\Repository\TalkRoomRepositoryInterface;
 class CreateLikeUseCase
 {
   public function __construct(
@@ -20,7 +23,8 @@ class CreateLikeUseCase
     private readonly LikeDomainServiceInterface $likeDomainService,
     private readonly MatchingDomainServiceInterface $matchingDomainService,
     private readonly MatchingRepositoryInterface $matchingRepository,
-    private readonly TransactionRepositoryInterface $transactionRepository
+    private readonly TransactionRepositoryInterface $transactionRepository,
+    private readonly TalkRoomRepositoryInterface $talkRoomRepository
   ) {
   }
 
@@ -59,7 +63,9 @@ class CreateLikeUseCase
 
       if ($isLikeFromTargetUserExists && !$isMatchingExists) {
         $matching = new Matching(UuidVo::create(), $user->getUserId(), $targetUser->getUserId());
+        $talkRoom = new TalkRoom(UuidVo::create(), $user->getUserId(), $targetUser->getUserId(), new LastMessage(''));
         $this->matchingRepository->create($matching);
+        $this->talkRoomRepository->create($talkRoom);
       }
     });
   }
