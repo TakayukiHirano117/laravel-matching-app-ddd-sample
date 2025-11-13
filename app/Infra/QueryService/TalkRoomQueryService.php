@@ -19,12 +19,6 @@ class TalkRoomQueryService implements TalkQueryServiceInterface
           ->orderBy('updated_at', 'desc')
           ->get();
 
-    if ($talkRoomsFromDb === null) {
-      return null;
-    }
-
-    // dd($userId->value());
-    // dd($talkRoomsFromDb);
     $talkRooms = [];
     foreach ($talkRoomsFromDb as $talkRoomFromDb) {
       $talkRooms[] = TalkRoom::NewTalkRoomByVal(
@@ -34,7 +28,7 @@ class TalkRoomQueryService implements TalkQueryServiceInterface
         LastMessage::NewLastMessageByVal($talkRoomFromDb->last_message ?? '')
       );
     }
-    // dd($talkRooms);
+
     return $talkRooms;
   }
 }
