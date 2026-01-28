@@ -9,6 +9,8 @@ handlerには既存のLaravelのcontrollersを使い、
 
 infra層では必要に応じてEloquentモデルも使用しています。(Domain層のモデルとは別にしている)
 
+↑これRepositoryで使っちゃダメっすねたぶん。集約単位で永続化するんで。
+
 また、Requestクラスでバリデーション、レスポンスの整形にResourceクラスを使用しています。
 
 APIの認証にはsanctumのトークン方式を採用しています。
